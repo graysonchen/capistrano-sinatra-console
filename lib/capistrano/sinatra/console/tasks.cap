@@ -12,7 +12,6 @@ namespace :sinatra do
   desc 'Interact with a remote rails console'
   task :console do
     args  = []
-    # rack_env = "RACK_ENV=#{fetch(:console_env)}"
     run_interactively primary(:app) do
       within current_path do
         as user: fetch(:console_user) do

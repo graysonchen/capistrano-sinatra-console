@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-sinatra-console'
+gem 'capistrano-sinatra-console', require: false
 ```
 
 And then execute:
@@ -20,9 +20,39 @@ Or install it yourself as:
 
     $ gem install capistrano-sinatra-console
 
-## Usage
 
-TODO: Write usage instructions here
+## Usage
+[capistrano-rails-console](https://github.com/ydkn/capistrano-rails-console)
+
+
+Require in `Capfile` to use the default task:
+
+```ruby
+require 'capistrano/sinatra/console'
+```
+
+Run a remote sinatra console with:
+
+    $ cap production sinatra:console
+ 
+
+## Options
+
+### Sinatra environment
+
+```ruby
+set :console_env, :production # use different environment than deployment environment (rack_env)
+```
+
+### Bin
+
+Reference: [Rails console equivalent for Sinatra](http://dlj.bz/eA5d2X)
+
+Configurable options, shown here with defaults:
+
+```ruby
+set :sinatra_bin, 'irb -I. -r api.rb'
+```
 
 ## Development
 
