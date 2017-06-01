@@ -1,0 +1,24 @@
+namespace :load do
+  task :defaults do
+    # Default values
+    set :run_bin, -> { fetch(:sinatra_bin, 'irb -I. -r api.rb') }
+    set :console_env,  -> { fetch(:rack_env, fetch(:stage, 'production')) }
+    set :console_user, -> { fetch(:app_user, nil) }
+    set :rack_env_bin, "RACK_ENV=#{fetch(:console_env)}"
+  end
+end
+
+namespace :sinatra do
+  desc 'Interact with a remote rails console'
+  task :console do
+    args  = []
+    # rack_env = "RACK_ENV=#{fetch(:console_env)}"
+    run_interactively primary(:app) do
+      within current_path do
+        as user: fetch(:console_user) do
+          execute(fetch(:rack_env_bin), :bundle, :exec, fetch(:run_bin), *args)
+        end
+      end
+    end
+  end
+end
